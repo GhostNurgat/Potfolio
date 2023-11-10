@@ -1,7 +1,19 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Potfolio.Models;
+using Potfolio.Data;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddDbContext<PortfolioContext>(options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("PortfolioConnection"));
+});
+builder.Services.AddIdentity<User, IdentityRole<int>>().AddEntityFrameworkStores<PortfolioContext>();
 
 var app = builder.Build();
 
