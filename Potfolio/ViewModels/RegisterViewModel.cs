@@ -1,4 +1,4 @@
-﻿namespace Potfolio.ViewModel
+﻿namespace Potfolio.ViewModels
 {
     using System.ComponentModel.DataAnnotations;
 

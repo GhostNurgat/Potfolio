@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Identity;
 namespace Potfolio.Controllers
 {
     using Potfolio.Models;
-    using Potfolio.ViewModel;
+    using Potfolio.ViewModels;
 
     public class AccountController : Controller
     {
@@ -76,5 +76,7 @@ namespace Potfolio.Controllers
             await _signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
         }
+
+        public IActionResult AddProfile() => View();
     }
 }

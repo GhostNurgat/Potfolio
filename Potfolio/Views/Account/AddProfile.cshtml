@@ -1,12 +1,37 @@
 ﻿@{
     ViewData["Title"] = "Завершения регистрации";
 }
+@model Potfolio.ViewModels.ProfileViewModel
 
 <div class="container">
     <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
         <div class="col-10 col-sm-8 col-lg-6">
             <img src="~/images/portfolio_vmbi5dtnrw2u_512.png" class="img-fluid" width="256" />
         </div>
-
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-body">
+                    <form method="post" enctype="multipart/form-data">
+                        <div class="mb-3">
+                            <label class="form-label" asp-for="Surname"></label>
+                            <input type="text" class="form-control" asp-for="Surname" placeholder="Введите Фамилию" />
+                            <span class="text-danger" asp-validation-for="Surname"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" asp-for="Name"></label>
+                            <input type="text" class="form-control" asp-for="Name" placeholder="Введите Имя" />
+                            <span class="text-danger" asp-validation-for="Name"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" asp-for="Patronymic"></label>
+                            <input type="text" class="form-control" asp-for="Patronymic" placeholder="Введите Отчество" />
+                            <span class="text-danger" asp-validation-for="Patronymic"></span>
+                        </div>
+                        <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+                        <input type="submit" class="btn btn-primary" value="Сохранить" />
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

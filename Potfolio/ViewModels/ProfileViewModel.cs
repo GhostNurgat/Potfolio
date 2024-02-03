@@ -1,4 +1,4 @@
-﻿namespace DigitalPotfolio.ViewModel
+﻿namespace Potfolio.ViewModels
 {
     using System.ComponentModel.DataAnnotations;
 
