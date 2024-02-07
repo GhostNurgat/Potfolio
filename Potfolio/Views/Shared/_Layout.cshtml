@@ -39,15 +39,22 @@
                             </ul>
                         </li>
                     </ul>
-                    <div class="btn-group" role="group">
-                        <button class="btn btn-outline-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Аккаунт
-                        </button>
-                        <ul class="dropdown-menu dropdown-menu-sm-end">
-                            <li><a class="dropdown-item" asp-area="" asp-controller="Account" asp-action="Login">Вход</a></li>
-                            <li><a class="dropdown-item" asp-area="" asp-controller="Account" asp-action="Register">Зарегистрироваться</a></li>
-                        </ul>
-                    </div>
+                    @if (!User.Identity.IsAuthenticated)
+                    {
+                        <div class="btn-group" role="group">
+                            <button class="btn btn-outline-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Аккаунт
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-sm-end">
+                                <li><a class="dropdown-item" asp-area="" asp-controller="Account" asp-action="Login">Вход</a></li>
+                                <li><a class="dropdown-item" asp-area="" asp-controller="Account" asp-action="Register">Зарегистрироваться</a></li>
+                            </ul>
+                        </div>
+                    }
+                    else
+                    {
+                        <a class="btn btn-outline-info" href="#">@User.Identity.Name</a>
+                    }
                 </div>
             </div>
         </nav>

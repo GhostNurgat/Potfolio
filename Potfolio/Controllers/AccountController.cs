@@ -1,20 +1,24 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace Potfolio.Controllers
 {
     using Potfolio.Models;
     using Potfolio.ViewModels;
+    using Potfolio.Data;
 
     public class AccountController : Controller
     {
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
+        private readonly PortfolioContext _context;
 
-        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager)
+        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, PortfolioContext context)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _context = context;
         }
 
         [HttpGet]
@@ -36,7 +40,7 @@ namespace Potfolio.Controllers
                 if (result.Succeeded)
                 {
                     await _signInManager.SignInAsync(user, false);
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("AddProfile", "Account");
                 }
                 else
                     foreach (var error in result.Errors)
@@ -77,6 +81,33 @@ namespace Potfolio.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        [HttpGet]
         public IActionResult AddProfile() => View();
+
+        [HttpPost, ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddProfile(ProfileViewModel model, string userName)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(x => x.UserName == userName);
+            if (user == null) return NotFound();
+
+            var profile = new Profile
+            {
+                Id = model.Id,
+                Surname = model.Surname,
+                Name = model.Name,
+                Patronymic = model.Patronymic
+            };
+
+            try
+            {
+                await _context.Profiles.AddAsync(profile);
+                await _context.SaveChangesAsync();
+                return RedirectToAction("Index", "Home");
+            }
+            catch (DbUpdateException)
+            {
+                throw;
+            }
+        }
     }
 }
